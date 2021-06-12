@@ -15,7 +15,7 @@ type Config struct {
 func LoadConfig() *Config {
 	_ = godotenv.Load()
 	var cfg Config
-	err := envconfig.Process("PICHART", &cfg)
+	err := envconfig.Process("PIECHART", &cfg)
 	if err != nil {
 		log.Fatal("failed to load config: ", err)
 	}
