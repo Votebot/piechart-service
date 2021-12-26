@@ -3,7 +3,7 @@ package piechart
 import (
 	"bytes"
 	"github.com/getsentry/sentry-go"
-	"github.com/wcharczuk/go-chart"
+	"github.com/niggelgame/go-chart/v2"
 	"go.uber.org/zap"
 )
 
@@ -29,63 +29,38 @@ func (c Config) GetValues() []chart.Value {
 	return arr
 }
 
-func addVotebotLogoRenderable(r chart.Renderer, canvasBox chart.Box, defaults chart.Style) {
-	chart.Draw.Box(r, chart.Box{Top: canvasBox.Height() - 23, Left: canvasBox.Width() - 20, Bottom: canvasBox.Height() - 10, Right: canvasBox.Width() - 16}, chart.Style{FillColor: chart.ColorWhite})
+// Icon Padding 10x10px to the bottom right corner
+func addVotebotLogoRenderable(r chart.Renderer, canvasBox chart.Box, _ chart.Style) {
+	paddingRight := 10
+	paddingBottom := 10
 
-	// Move to function
-	r.SetFillColor(chart.ColorAlternateGray)
-	r.MoveTo(canvasBox.Width()-20, canvasBox.Height()-12)
-	r.LineTo(canvasBox.Width()-18, canvasBox.Height()-10)
-	r.LineTo(canvasBox.Width()-20, canvasBox.Height()-10)
-	r.LineTo(canvasBox.Width()-20, canvasBox.Height()-12)
+	backgroundColor := chart.ColorAlternateGray
+	highlightColor := chart.ColorWhite
+
+	chart.Draw.Box(r, chart.Box{Top: canvasBox.Bottom - (13 + paddingBottom), Left: canvasBox.Right - (15 + paddingRight), Bottom: canvasBox.Bottom - paddingBottom, Right: canvasBox.Right - (11 + paddingRight)}, chart.Style{FillColor: highlightColor})
+
+	// 2x2px corner cutout in first bar
+	r.SetFillColor(backgroundColor)
+	r.MoveTo(canvasBox.Right-(15+paddingRight), canvasBox.Bottom-(2+paddingBottom))
+	r.LineTo(canvasBox.Right-(13+paddingRight), canvasBox.Bottom-paddingBottom)
+	r.LineTo(canvasBox.Right-(15+paddingRight), canvasBox.Bottom-paddingBottom)
+	r.LineTo(canvasBox.Right-(15+paddingRight), canvasBox.Bottom-(2+paddingBottom))
 	r.FillStroke()
 
-	chart.Draw.Box(r, chart.Box{Top: canvasBox.Height() - 30, Left: canvasBox.Width() - 14, Bottom: canvasBox.Height() - 11, Right: canvasBox.Width() - 10}, chart.Style{FillColor: chart.ColorAlternateGray, StrokeColor: chart.ColorWhite, StrokeWidth: 1})
-	chart.Draw.Box(r, chart.Box{Top: canvasBox.Height() - 26, Left: canvasBox.Width() - 8, Bottom: canvasBox.Height() - 10, Right: canvasBox.Width() - 4}, chart.Style{FillColor: chart.ColorWhite})
+	// Add one pixel padding at bottom for outlined form
+	chart.Draw.Box(r, chart.Box{Top: canvasBox.Bottom - (20 + paddingBottom), Left: canvasBox.Right - (9 + paddingRight), Bottom: canvasBox.Bottom - (paddingBottom + 1), Right: canvasBox.Right - (6 + paddingRight)}, chart.Style{FillColor: backgroundColor, StrokeColor: highlightColor, StrokeWidth: 1})
+
+	chart.Draw.Box(r, chart.Box{Top: canvasBox.Bottom - (16 + paddingBottom), Left: canvasBox.Right - (4 + paddingRight), Bottom: canvasBox.Bottom - paddingBottom, Right: canvasBox.Right - paddingRight}, chart.Style{FillColor: highlightColor})
 }
-
-/*drawTriangle(
-	r,
-	Point{
-		x: canvasBox.Width() - 20,
-		y: canvasBox.Height() - 19,
-	}, Point{
-		x: canvasBox.Width() - 16,
-		y: canvasBox.Height() - 10,
-	}, Point{
-		x: canvasBox.Width() - 20,
-		y: canvasBox.Height() - 10,
-	},
-	chart.ColorGreen,
-	canvasBox,
-)*/
-
-/*type Point struct {
-	x int
-	y int
-}
-
-func drawTriangle(r chart.Renderer, p1, p2, p3 Point, color drawing.Color, canvasBox chart.Box) {
-	r.SetFillColor(color)
-
-	defer r.ResetStyle()
-
-	r.MoveTo(p1.x, p1.y)
-	r.LineTo(p2.x, p2.y)
-	r.LineTo(p3.x, p3.x)
-	r.LineTo(p1.x, p1.y)
-	r.FillStroke()
-
-
-}*/
 
 func CreateChart(cfg Config) []byte {
 	pie := chart.PieChart{
-		Title:  cfg.Title,
-		TitleStyle: chart.Style{Show: true},
-		Width:  cfg.Width,
-		Height: cfg.Height,
-		Values: cfg.GetValues(),
+		Title:           cfg.Title,
+		TitleStyle:      chart.Style{Hidden: false},
+		TitleInsetChart: true,
+		Width:           cfg.Width,
+		Height:          cfg.Height,
+		Values:          cfg.GetValues(),
 		Elements: []chart.Renderable{
 			addVotebotLogoRenderable,
 		},
@@ -100,16 +75,6 @@ func CreateChart(cfg Config) []byte {
 		sentry.CaptureException(err)
 		return nil
 	}
-
-	/*	var imageBuffer []byte
-		_, err = collector.Write(imageBuffer)
-
-		// image, err := collector.Image()
-		if err != nil {
-			zap.L().Error("could not create pie chart image", zap.Error(err))
-			sentry.CaptureException(err)
-			return nil
-		}*/
 
 	return imageBuffer.Bytes()
 }
