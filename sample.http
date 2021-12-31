@@ -1,0 +1,81 @@
+POST http://127.0.0.1:8000/create
+Content-Type: application/json
+
+{
+  "title": "Test Chart",
+  "width": 512,
+  "height": 512,
+  "votes": [
+    {
+      "vote_count": 25,
+      "title": "Möglichkeit 1"
+    },
+    {
+      "vote_count": 8,
+      "title": "Möglichkeit 2"
+    },
+    {
+      "vote_count": 1,
+      "title": "Möglichkeit 3"
+    },
+    {
+      "vote_count": 3,
+      "title": "Möglichkeit 4"
+    }
+  ]
+}
+
+###
+
+# Two vote
+POST http://127.0.0.1:8000/create
+Content-Type: application/json
+
+{
+  "title": "Test Chart",
+  "width": 512,
+  "height": 512,
+  "votes": [
+    {
+      "vote_count": 25,
+      "title": "Möglichkeit 1"
+    },
+    {
+      "vote_count": 10,
+      "title": "Möglichkeit 2"
+    }
+  ]
+}
+
+###
+# One vote
+POST http://127.0.0.1:8000/create
+Content-Type: application/json
+
+{
+  "title": "Test Chart",
+  "width": 512,
+  "height": 512,
+  "votes": [
+    {
+      "vote_count": 25,
+      "title": "Möglichkeit 1"
+    }
+  ]
+}
+
+###
+
+# No vote
+POST http://127.0.0.1:8000/create
+Content-Type: application/json
+
+{
+  "title": "Test Chart",
+  "width": 512,
+  "height": 512,
+  "votes": [
+  ]
+}
+
+###

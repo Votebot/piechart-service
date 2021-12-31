@@ -107,8 +107,8 @@ github.com/nats-io/jwt v0.3.0/go.mod h1:fRYCDE99xlTsqUzISS1Bi75UBJ6ljOJQOAAu5Vgl
 github.com/nats-io/nats.go v1.9.1/go.mod h1:ZjDU1L/7fJ09jvUSRVBR2e7+RnLiiIQyqyzEE/Zbp4w=
 github.com/nats-io/nkeys v0.1.0/go.mod h1:xpnFELMwJABBLVhffcfd1MZx6VsNRFpEugbxziKVo7w=
 github.com/nats-io/nuid v1.0.1/go.mod h1:19wcPz3Ph3q0Jbyiqsd0kePYG7A95tJPxeL+1OSON2c=
-github.com/niggelgame/go-chart/v2 v2.2.2 h1:T0y+3ZsOYOm+PNjHoWcvTiCNmA1poynpOuy7/YCQbmI=
-github.com/niggelgame/go-chart/v2 v2.2.2/go.mod h1:emZUT11q4wEGW7vpNcevRRgg6k6g42aoThZN12Q7X2M=
+github.com/niggelgame/go-chart/v2 v2.2.5 h1:nm7qeB/y6V9u6nhwdUkBjGlR+u/vqT2favqfqmjeBGE=
+github.com/niggelgame/go-chart/v2 v2.2.5/go.mod h1:emZUT11q4wEGW7vpNcevRRgg6k6g42aoThZN12Q7X2M=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.10.3/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/gomega v1.7.1/go.mod h1:XdKZgCCFLUoM/7CFJVPcG8C1xQ1AJ0vpAezJrB7JYyY=
