@@ -12,6 +12,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: ["arm", "x86"]
     permissions:
       contents: read
       packages: write
@@ -30,6 +33,7 @@ jobs:
         env:
           CGO_ENABLED: 0
           GOOS: linux 
+          GOARCH: ${{ matrix.arch == 'arm' && 'aarch64' || 'amd64' }}
         run: go build cmd/service/main.go
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -56,6 +60,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: ${{ matrix.arch == 'arm' && 'linux/arm64' || 'linux/amd64' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Sign the published Docker image
