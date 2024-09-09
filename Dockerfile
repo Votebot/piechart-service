@@ -1,4 +1,4 @@
-FROM alpine
+FROM --platform=$TARGETOS/$TARGETARCH alpine
 
 RUN apk --no-cache add ca-certificates
 
