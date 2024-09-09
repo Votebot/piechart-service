@@ -39,6 +39,7 @@ jobs:
           path: main
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     permissions:
       contents: read
       packages: write
