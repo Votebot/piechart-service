@@ -3,6 +3,6 @@ ARG TARGETARCH
 RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
-COPY $TARGETARCH/main .
+COPY --chmod=755 $TARGETARCH/main .
 
 CMD ["/root/main"]
